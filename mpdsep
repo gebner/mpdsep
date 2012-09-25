@@ -1,0 +1,24 @@
+#!/bin/bash
+
+mpc -q consume on
+mpc -q clear
+
+declare -A filename
+help=""
+
+while read line; do
+  eval set - $line
+  help="${help}($1) $2    "
+  filename[$1]=`mpc search any "$3" | head -n1`
+done <effects.txt
+
+echo "$help" | column
+
+while IFS= read -sN1 c; do
+  fn=${filename[$c]}
+  mpc -q clear
+  if [[ -n "$fn" ]]; then
+    mpc -q add "$fn"
+    mpc -q play
+  fi
+done
