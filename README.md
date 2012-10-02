@@ -9,11 +9,12 @@ Format of effects.txt
 
 Each line in `effects.txt` describes a single sound effect.  For example:
 
-    w "Hilarious laughing" laughtrack
+    w "Hilarious laughing" laughtrack o
 
 `w` is the keystroke that will trigger the effect, "Hilarious laughing" is
-shown in the on-screen legend, and `laughtrack` is the search term used to find
-the sound track.  `mpdsep` uses the first result of `mpc search any $query`, a
+shown in the on-screen legend, `laughtrack` is the search term used to find the
+sound track, and `o` means that the track will be played once (for repeating on
+a loop use `r`).  `mpdsep` uses the first result of `mpc search any $query`, a
 filename is also fine.
 
 As shown in the example, spaces can be escaped using double quotes.

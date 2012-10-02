@@ -1,15 +1,13 @@
 #!/bin/bash
 
-mpc -q consume on
-mpc -q clear
-
-declare -A filename
+declare -A filename mode
 help=""
 
 while read line; do
   eval set - $line
   help="${help}($1) $2    "
   filename[$1]=`mpc search any "$3" | head -n1`
+  mode[$1]=$4
 done <effects.txt
 
 echo "$help" | column
@@ -18,6 +16,15 @@ while IFS= read -sN1 c; do
   fn=${filename[$c]}
   mpc -q clear
   if [[ -n "$fn" ]]; then
+    case "${mode[$c]}" in
+    r)
+      mpc -q consume off
+      mpc -q repeat on;;
+    *)
+      mpc -q consume on
+      mpc -q repeat off;;
+    esac
+
     mpc -q add "$fn"
     mpc -q play
   fi
